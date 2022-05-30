@@ -19,7 +19,7 @@ class UserMapperTest {
         // assert userMapper.getUser(1).getUserName().equals("admin");
         assertAll(
                 () -> assertEquals("admin", user.getName()),
-                () -> assertEquals(Role.ADMIN, user.getRole()),
+                () -> assertEquals(Role.admin, user.getRole()),
                 () -> assertEquals(1, user.getId()),
                 () -> assertTrue(user.isValid())
         );
@@ -31,14 +31,14 @@ class UserMapperTest {
         String name = "test" + System.currentTimeMillis();
         user.setName(name);
         user.setPassword("123456");
-        user.setRole(Role.AUTHOR);
+        user.setRole(Role.author);
         user.setValid(true);
         user.setEmail("test@test.com");
         userMapper.addUser(user);
         User user1 = userMapper.getUserById(user.getId());
         assertEquals(user1.getName(), name);
         assertEquals(user1.getPassword(), "123456");
-        assertEquals(user1.getRole(), Role.AUTHOR);
+        assertEquals(user1.getRole(), Role.author);
         assertEquals(user1.getEmail(), "test@test.com");
     }
 
@@ -48,7 +48,7 @@ class UserMapperTest {
         String name = "test" + System.currentTimeMillis();
         user.setName(name);
         user.setPassword("123456");
-        user.setRole(Role.AUTHOR);
+        user.setRole(Role.author);
         user.setValid(true);
         user.setResearchArea("test area");
         int affected = userMapper.addUser(user);
@@ -61,7 +61,7 @@ class UserMapperTest {
     @Test
     void getUsersByRole() {
         // assert users is greater than 1
-        assertTrue(userMapper.getUsersByRole(Role.AUTHOR).size() > 1);
+        assertTrue(userMapper.getUsersByRole(Role.author).size() > 1);
     }
 
     @Test
@@ -70,7 +70,7 @@ class UserMapperTest {
         String name = "test" + System.currentTimeMillis();
         user.setName(name);
         user.setPassword("123456");
-        user.setRole(Role.AUTHOR);
+        user.setRole(Role.author);
         user.setValid(true);
         user.setResearchArea("test area");
         int affected = userMapper.addUser(user);
@@ -90,7 +90,7 @@ class UserMapperTest {
         user.setName("update test");
         user.setPassword("12345678");
         user.setId(2);
-        user.setRole(Role.AUTHOR);
+        user.setRole(Role.author);
         user.setResearchArea("test area update");
         userMapper.updateUser(user);
         User user1 = userMapper.getUserById(user.getId());

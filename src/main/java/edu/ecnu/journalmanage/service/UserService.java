@@ -27,10 +27,10 @@ public class UserService {
         if (user.getRole() == null) {
             return "User role cannot be null";
         }
-        if (user.getRole() == Role.ADMIN) {
+        if (user.getRole() == Role.admin) {
             return "Admin cannot register";
         }
-        user.setValid(user.getRole() == Role.AUTHOR);
+        user.setValid(user.getRole() == Role.author);
         int affected = userMapper.addUser(user);
         return affected == 1 ? null : "Register failed";
     }

@@ -8,7 +8,7 @@ public class User {
     private String name;
     private String password;
     private Role role;
-    private boolean valid;
+    private boolean valid = false;
     private String researchArea;
     private String title;
     private String email;

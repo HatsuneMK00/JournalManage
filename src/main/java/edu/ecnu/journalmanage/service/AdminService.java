@@ -20,23 +20,20 @@ public class AdminService {
         this.userMapper = userMapper;
     }
 
-    public String changeUserRole(@NotNull User user) {
-        if (user.getId() == null) {
-            return "User id is null";
-        }
-        if (user.getRole() == null) {
-            return "User role is null";
-        }
-        if (user.getRole() == Role.ADMIN) {
+    public String changeUserRole(int userId, @NotNull Role role) {
+        if (role == Role.admin) {
             return "User role cannot be admin";
         }
-        if (user.getRole() == Role.CHIEF_EDITOR) {
+        if (role == Role.chiefEditor) {
             // fixme potential concurrency issue
             int chiefEditorCount = userMapper.getChiefEditorCount();
             if (chiefEditorCount >= 1) {
                 return "Chief editor count is already 1";
             }
         }
+        User user = new User();
+        user.setId(userId);
+        user.setRole(role);
         return userMapper.changeUserRole(user) == 1 ? null : "Update user failed";
     }
 
@@ -48,13 +45,13 @@ public class AdminService {
         map.put("chiefEditors", new ArrayList<>());
         for (User user : users) {
             switch (user.getRole()) {
-                case AUTHOR:
+                case author:
                     map.get("authors").add(user);
                     break;
-                case EDITOR:
+                case editor:
                     map.get("editors").add(user);
                     break;
-                case CHIEF_EDITOR:
+                case chiefEditor:
                     map.get("chiefEditors").add(user);
                     break;
             }
