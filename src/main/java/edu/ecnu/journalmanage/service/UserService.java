@@ -15,12 +15,16 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public boolean login(String username, String password) {
+    public User login(String username, String password) {
         User user = userMapper.findByUsername(username);
         if (user == null) {
-            return false;
+            return null;
         }
-        return user.isValid() && user.getPassword().equals(password);
+        if (user.isValid() && user.getPassword().equals(password)) {
+            return user;
+        } else {
+            return null;
+        }
     }
 
     public String register(User user) {
@@ -35,8 +39,6 @@ public class UserService {
         return affected == 1 ? null : "Register failed";
     }
 
-    // use like this:
-    // err = authorService.completeUserInfo(user)
     public String completeUserInfo(@NotNull User user) {
         if (user.getId() == null) {
             return "User id is null";

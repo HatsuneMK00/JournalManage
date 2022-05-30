@@ -67,7 +67,14 @@ public class AdminService {
         return userMapper.getUsersByRole(Role.expert);
     }
 
-    public String validateUser(int userId) {
+    public String validateUser(int userId, Role role) {
+        if (role == Role.chiefEditor) {
+            // fixme potential concurrency issue
+            int chiefEditorCount = userMapper.getChiefEditorCount();
+            if (chiefEditorCount >= 1) {
+                return "Chief editor count is already 1";
+            }
+        }
         return userMapper.updateUserValid(userId, true) == 1 ? null : "Validate user failed";
     }
 

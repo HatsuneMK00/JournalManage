@@ -106,21 +106,22 @@ class AdminServiceTest {
         );
 
         for (User invalidEditor : invalidEditors) {
-            String err = adminService.validateUser(invalidEditor.getId());
+            String err = adminService.validateUser(invalidEditor.getId(), Role.editor);
             assertNull(err);
         }
         for (User invalidExpert : invalidExperts) {
-            String err = adminService.validateUser(invalidExpert.getId());
+            String err = adminService.validateUser(invalidExpert.getId(), Role.expert);
             assertNull(err);
         }
         for (User invalidChiefEditor : invalidChiefEditors) {
-            String err = adminService.validateUser(invalidChiefEditor.getId());
-            assertNull(err);
+            // cannot have more than one chief editor
+            String err = adminService.validateUser(invalidChiefEditor.getId(), Role.chiefEditor);
+            assertNotNull(err);
         }
 
         invalidUsers = adminService.getAllInvalidUsers();
         assertEquals(0, invalidUsers.get("editors").size());
         assertEquals(0, invalidUsers.get("experts").size());
-        assertEquals(0, invalidUsers.get("chiefEditors").size());
+        assertTrue(invalidUsers.get("chiefEditors").size() > 0);
     }
 }
