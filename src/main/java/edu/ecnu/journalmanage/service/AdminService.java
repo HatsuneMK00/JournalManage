@@ -40,13 +40,13 @@ public class AdminService {
     public Map<String, List<User>> getAllInvalidUsers() {
         List<User> users = userMapper.getAllInvalidUsers();
         HashMap<String, List<User>> map = new HashMap<>();
-        map.put("authors", new ArrayList<>());
+        map.put("experts", new ArrayList<>());
         map.put("editors", new ArrayList<>());
         map.put("chiefEditors", new ArrayList<>());
         for (User user : users) {
             switch (user.getRole()) {
-                case author:
-                    map.get("authors").add(user);
+                case expert:
+                    map.get("experts").add(user);
                     break;
                 case editor:
                     map.get("editors").add(user);
@@ -57,6 +57,18 @@ public class AdminService {
             }
         }
         return map;
+    }
+
+    public List<User> getAllEditors() {
+        return userMapper.getUsersByRole(Role.editor);
+    }
+
+    public List<User> getAllExperts() {
+        return userMapper.getUsersByRole(Role.expert);
+    }
+
+    public String validateUser(int userId) {
+        return userMapper.updateUserValid(userId, true) == 1 ? null : "Validate user failed";
     }
 
     public String deleteUser(int userId) {

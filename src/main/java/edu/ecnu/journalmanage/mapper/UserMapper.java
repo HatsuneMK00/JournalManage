@@ -19,7 +19,7 @@ public interface UserMapper {
     @Select("select * from user where role=#{role}")
     List<User> getUsersByRole(Role role);
 
-    @Select("select * from user where invalid=0")
+    @Select("select * from user where valid=0")
     List<User> getAllInvalidUsers();
 
     // get chief editor count
@@ -34,6 +34,9 @@ public interface UserMapper {
     // update user(name, password, role, valid, researchArea, title)
     @Update("update user set name=#{name}, password=#{password}, valid=#{valid}, research_area=#{researchArea}, title=#{title}, email=#{email} where id=#{id}")
     int updateUser(User user);
+
+    @Update("update user set valid=#{valid} where id=#{userId}")
+    int updateUserValid(int userId, boolean valid);
 
     @Update("update user set role=#{role} where id=#{id}")
     int changeUserRole(User user);
