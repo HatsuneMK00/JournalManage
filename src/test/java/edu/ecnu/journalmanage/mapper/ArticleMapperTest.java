@@ -7,10 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.time.LocalTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,9 +53,15 @@ class ArticleMapperTest {
     }
 
     @Test
-    void getReviewOfArticleByAuthorId() {
-        List<Review> reviews = articleMapper.getArticleReviewByArticle(2);
+    void getReviewOfArticle() {
+        List<Review> reviews = articleMapper.getReviewByArticle(2);
         assertTrue(reviews.size() > 0);
+    }
+
+    @Test
+    void getReviewOfArticleWithNoReview() {
+        List<Review> reviews = articleMapper.getReviewByArticle(3);
+        assertEquals(0, reviews.size());
     }
 
 }

@@ -9,7 +9,8 @@ public class Review {
     private Integer id;
     private Integer reviewerId;
     private Integer articleId;
-    private String comment;
+    private String content;
     private Date createTime = new Date();
     private Date updateTime = new Date();
+    private ReviewType type;
 }

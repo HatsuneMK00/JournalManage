@@ -30,6 +30,6 @@ public interface ArticleMapper {
     Article getArticleById(int id);
 
     @Select("select * from review where article_id=#{articleId} order by update_time desc")
-    List<Review> getArticleReviewByArticle(int articleId);
+    List<Review> getReviewByArticle(int articleId);
 
 }
