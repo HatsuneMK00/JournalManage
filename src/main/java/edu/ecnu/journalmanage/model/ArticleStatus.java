@@ -1,6 +1,6 @@
 package edu.ecnu.journalmanage.model;
 
 public enum ArticleStatus {
-    submitted, editorRejection, editorRevision, expertRejection, expertRevision,
-    chiefEditorRejection, chiefEditorRevision, accepted
+    editorReview, editorRejection, editorReturned, editorRevision, expertReview, expertRejection, expertReturned, expertRevision,
+    chiefEditorReview, chiefEditorRejection, chiefEditorReturned, chiefEditorRevision, accepted
 }

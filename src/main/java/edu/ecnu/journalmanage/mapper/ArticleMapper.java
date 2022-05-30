@@ -20,11 +20,36 @@ public interface ArticleMapper {
             "where id=#{id}")
     int updateArticle(Article article);
 
+    @Update("update article set status=#{status} where id=#{articleId}")
+    int updateArticleStatus(int articleId, ArticleStatus status);
+
+    @Update("update article set expert_id=#{expertId} where id=#{articleId}")
+    int updateArticleExpert(int articleId, int expertId);
+
+    @Update("update article set editor_id=#{editorId} where id=#{articleId}")
+    int updateArticleEditor(int articleId, int editorId);
+
+    @Update("update article set chief_editor_id=#{chiefEditorId} where id=#{articleId}")
+    int updateArticleChiefEditor(int articleId, int chiefEditorId);
+
+
     @Select("select * from article where status=#{status} and author_id=#{authorId}")
     List<Article> getArticlesByStatus(int authorId, ArticleStatus status);
 
     @Select("select * from article where author_id=#{authorId}")
     List<Article> getArticlesByAuthor(int authorId);
+
+    @Select("select * from article where editor_id=#{editorId}")
+    List<Article> getArticlesByEditor(int editorId);
+
+    @Select("select * from article where expert_id=#{expertId}")
+    List<Article> getArticlesByExpert(int expertId);
+
+    @Select("select * from article where chief_editor_id=#{chiefEditorId}")
+    List<Article> getArticlesByChiefEditor(int chiefEditorId);
+
+    @Select("select * from article")
+    List<Article> getAllArticles();
 
     @Select("select * from article where id=#{id}")
     Article getArticleById(int id);

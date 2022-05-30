@@ -37,7 +37,7 @@ public class AuthorService {
         List<Article> articles = articleMapper.getArticlesByAuthor(authorId);
         Stream<Article> accepted = articles.stream().filter((element) -> {
             ArticleStatus status = element.getStatus();
-            return status == ArticleStatus.submitted ||
+            return status == ArticleStatus.editorReview ||
                     status == ArticleStatus.editorRevision ||
                     status == ArticleStatus.expertRevision ||
                     status == ArticleStatus.chiefEditorRevision;

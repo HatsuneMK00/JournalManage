@@ -48,7 +48,7 @@ class ArticleMapperTest {
 
     @Test
     void getArticleByStatus() {
-        List<Article> articles = articleMapper.getArticlesByStatus(13, ArticleStatus.submitted);
+        List<Article> articles = articleMapper.getArticlesByStatus(13, ArticleStatus.editorReview);
         assertTrue(articles.size() > 0);
     }
 

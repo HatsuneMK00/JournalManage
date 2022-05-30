@@ -13,7 +13,7 @@ public class Article {
     private int editorId;
     private int expertId;
     private int chiefEditorId;
-    private ArticleStatus status = ArticleStatus.submitted;
+    private ArticleStatus status = ArticleStatus.editorReview;
     private String filePath;
     private Date createTime = new Date();
     private Date updateTime = new Date();
