@@ -24,7 +24,31 @@ public class AuthorService {
     }
 
     public String submitArticle(@NotNull Article article) {
-        return articleMapper.addArticle(article) == 1 ? null : "Add article failed";
+        int affected = articleMapper.addArticle(article);
+        if (affected == 0) {
+            return "Add article failed";
+        }
+        articleMapper.updateArticleStatus(article.getId(), ArticleStatus.editorReview);
+        return null;
+    }
+
+    public String submitRevisionArticle(@NotNull Article article) {
+        int affected = articleMapper.updateArticle(article);
+        if (affected == 0) {
+            return "Update article failed";
+        }
+        switch (article.getStatus()) {
+            case editorReturned:
+                articleMapper.updateArticleStatus(article.getId(), ArticleStatus.editorRevision);
+                break;
+            case expertReturned:
+                articleMapper.updateArticleStatus(article.getId(), ArticleStatus.expertRevision);
+                break;
+            case chiefEditorReturned:
+                articleMapper.updateArticleStatus(article.getId(), ArticleStatus.chiefEditorRevision);
+                break;
+        }
+        return null;
     }
 
     public List<Article> getAcceptedArticles(int authorId) {

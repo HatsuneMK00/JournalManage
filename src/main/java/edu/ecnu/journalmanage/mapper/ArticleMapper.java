@@ -16,7 +16,7 @@ public interface ArticleMapper {
     int addArticle(Article article);
 
     @Update("update article set title=#{title}, author=#{author}, abstract_text=#{abstractText}, " +
-            "keywords=#{keywords}, file_path=#{filePath}, status=#{status}, update_time=#{updateTime} " +
+            "keywords=#{keywords}, file_path=#{filePath}, update_time=#{updateTime} " +
             "where id=#{id}")
     int updateArticle(Article article);
 
