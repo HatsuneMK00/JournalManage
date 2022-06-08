@@ -33,6 +33,13 @@ public class ChiefEditorService {
                 .collect(java.util.stream.Collectors.toList());
     }
 
+    /**
+     * 获取绑定到该主编的文章
+     * @param chiefEditorId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     public PageInfo<Article> getToReviewArticlesPaged(int chiefEditorId, int pageNum, int pageSize) {
         return PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.getToReviewArticles(chiefEditorId));
