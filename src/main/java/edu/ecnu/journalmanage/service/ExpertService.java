@@ -1,5 +1,7 @@
 package edu.ecnu.journalmanage.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import edu.ecnu.journalmanage.mapper.ArticleMapper;
 import edu.ecnu.journalmanage.mapper.ReviewMapper;
 import edu.ecnu.journalmanage.mapper.UserMapper;
@@ -22,10 +24,15 @@ public class ExpertService {
     }
 
     public List<Article> getToReviewArticles(int expertId) {
-        return articleMapper.getArticlesByEditor(expertId).stream().filter(
+        return articleMapper.getArticlesByExpert(expertId).stream().filter(
                 article -> article.getStatus() == ArticleStatus.expertReview ||
                         article.getStatus() == ArticleStatus.expertRevision)
                 .collect(java.util.stream.Collectors.toList());
+    }
+
+    public PageInfo<Article> getToReviewArticlesPaged(int expertId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(this.getToReviewArticles(expertId));
     }
 
     public List<Article> getReviewedArticles(int expertId) {
@@ -33,6 +40,11 @@ public class ExpertService {
         Stream<Article> reviewed = articles.stream().filter(article -> article.getStatus() != ArticleStatus.editorReview &&
                 article.getStatus() != ArticleStatus.editorRevision);
         return reviewed.collect(java.util.stream.Collectors.toList());
+    }
+
+    public PageInfo<Article> getReviewedArticlesPaged(int expertId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(this.getReviewedArticles(expertId));
     }
 
     public String giveReviewToArticle(Review review, ReviewResult result) {

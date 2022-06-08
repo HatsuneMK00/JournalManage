@@ -1,5 +1,7 @@
 package edu.ecnu.journalmanage.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import edu.ecnu.journalmanage.mapper.ArticleMapper;
 import edu.ecnu.journalmanage.mapper.ReviewMapper;
 import edu.ecnu.journalmanage.mapper.UserMapper;
@@ -31,11 +33,21 @@ public class ChiefEditorService {
                 .collect(java.util.stream.Collectors.toList());
     }
 
+    public PageInfo<Article> getToReviewArticlesPaged(int chiefEditorId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(this.getToReviewArticles(chiefEditorId));
+    }
+
     public List<Article> getReviewedArticles(int chiefEditorId) {
         List<Article> articles = articleMapper.getArticlesByChiefEditor(chiefEditorId);
         Stream<Article> reviewed = articles.stream().filter(article -> article.getStatus() != ArticleStatus.chiefEditorReview &&
                 article.getStatus() != ArticleStatus.chiefEditorRevision);
         return reviewed.collect(java.util.stream.Collectors.toList());
+    }
+
+    public PageInfo<Article> getReviewedArticlesPaged(int chiefEditorId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(this.getReviewedArticles(chiefEditorId));
     }
 
     public String giveReviewToArticle(Review review, ReviewResult result) {

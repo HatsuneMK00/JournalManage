@@ -29,6 +29,9 @@ public interface ArticleMapper {
     @Update("update article set editor_id=#{editorId} where id=#{articleId}")
     int updateArticleEditor(int articleId, int editorId);
 
+    @Select("select editor_id from article where id=#{articleId}")
+    Integer getArticleEditor(int articleId);
+
     @Update("update article set chief_editor_id=#{chiefEditorId} where id=#{articleId}")
     int updateArticleChiefEditor(int articleId, int chiefEditorId);
 

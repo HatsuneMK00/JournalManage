@@ -64,4 +64,9 @@ class ArticleMapperTest {
         assertEquals(0, reviews.size());
     }
 
+    @Test
+    void getArticleEditor() {
+        Integer editorId = articleMapper.getArticleEditor(2);
+        assertNull(editorId);
+    }
 }

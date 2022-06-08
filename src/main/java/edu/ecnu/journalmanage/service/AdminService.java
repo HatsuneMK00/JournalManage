@@ -1,5 +1,7 @@
 package edu.ecnu.journalmanage.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import edu.ecnu.journalmanage.mapper.UserMapper;
 import edu.ecnu.journalmanage.model.Role;
 import edu.ecnu.journalmanage.model.User;
@@ -59,12 +61,28 @@ public class AdminService {
         return map;
     }
 
+    public PageInfo<User> getAllInvalidUsersPaged(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> users = userMapper.getAllInvalidUsers();
+        return new PageInfo<>(users);
+    }
+
     public List<User> getAllEditors() {
         return userMapper.getUsersByRole(Role.editor);
     }
 
+    public PageInfo<User> getAllEditorsPaged(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(this.getAllEditors());
+    }
+
     public List<User> getAllExperts() {
         return userMapper.getUsersByRole(Role.expert);
+    }
+
+    public PageInfo<User> getAllExpertsPaged(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(this.getAllExperts());
     }
 
     public String validateUser(int userId, Role role) {

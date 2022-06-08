@@ -1,5 +1,6 @@
 package edu.ecnu.journalmanage.service;
 
+import com.github.pagehelper.PageInfo;
 import edu.ecnu.journalmanage.mapper.UserMapper;
 import edu.ecnu.journalmanage.model.Role;
 import edu.ecnu.journalmanage.model.User;
@@ -123,5 +124,26 @@ class AdminServiceTest {
         assertEquals(0, invalidUsers.get("editors").size());
         assertEquals(0, invalidUsers.get("experts").size());
         assertTrue(invalidUsers.get("chiefEditors").size() > 0);
+    }
+
+    /**
+     * 测试分页获取invalid用户
+     */
+    @Test
+    void getInvalidUsers() {
+        PageInfo<User> userPage = adminService.getAllInvalidUsersPaged(1, 5);
+//        System.out.println(userPage.getList());
+        assertEquals(5, userPage.getList().size());
+        assertEquals(1, userPage.getPageNum());
+        assertTrue(userPage.isHasNextPage());
+    }
+
+    /**
+     * 测试分页获取expert
+     */
+    @Test
+    void getExperts() {
+        PageInfo<User> users = adminService.getAllExpertsPaged(1, 5);
+        assertEquals(5, users.getList().size());
     }
 }

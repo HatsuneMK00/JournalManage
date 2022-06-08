@@ -1,5 +1,7 @@
 package edu.ecnu.journalmanage.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import edu.ecnu.journalmanage.mapper.ArticleMapper;
 import edu.ecnu.journalmanage.model.Article;
 import edu.ecnu.journalmanage.model.ArticleStatus;
@@ -57,6 +59,11 @@ public class AuthorService {
         return accepted.collect(java.util.stream.Collectors.toList());
     }
 
+    public PageInfo<Article> getAcceptedArticlesPaged(int authorId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(this.getAcceptedArticles(authorId));
+    }
+
     public List<Article> getInProgressArticles(int authorId) {
         List<Article> articles = articleMapper.getArticlesByAuthor(authorId);
         Stream<Article> accepted = articles.stream().filter((element) -> {
@@ -67,6 +74,11 @@ public class AuthorService {
                     status == ArticleStatus.chiefEditorRevision;
         });
         return accepted.collect(java.util.stream.Collectors.toList());
+    }
+
+    public PageInfo<Article> getInProgressArticlesPaged(int authorId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(this.getInProgressArticles(authorId));
     }
 
     public Map<String, List<Review>> getReviewOfArticle(int articleId) {
