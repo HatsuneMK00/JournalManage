@@ -60,8 +60,7 @@ public class AuthorService {
     }
 
     public PageInfo<Article> getAcceptedArticlesPaged(int authorId, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(this.getAcceptedArticles(authorId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getAcceptedArticles(authorId));
     }
 
     public List<Article> getInProgressArticles(int authorId) {
@@ -77,8 +76,7 @@ public class AuthorService {
     }
 
     public PageInfo<Article> getInProgressArticlesPaged(int authorId, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(this.getInProgressArticles(authorId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getInProgressArticles(authorId));
     }
 
     public Map<String, List<Review>> getReviewOfArticle(int articleId) {

@@ -9,10 +9,10 @@ public class Article {
     private int id;
     private String title;
     private String abstractText;
-    private int authorId;
-    private int editorId;
-    private int expertId;
-    private int chiefEditorId;
+    private Integer authorId;
+    private Integer editorId;
+    private Integer expertId;
+    private Integer chiefEditorId;
     private ArticleStatus status = ArticleStatus.editorReview;
     private String filePath;
     private Date createTime = new Date();

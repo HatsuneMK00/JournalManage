@@ -23,16 +23,25 @@ public class EditorService {
         this.userMapper = userMapper;
     }
 
+    public List<Article> getAllUnbindArticles() {
+        List<Article> articles = articleMapper.getAllArticles();
+        Stream<Article> unbindArticles = articles.stream().filter(article -> article.getEditorId() == null);
+        return unbindArticles.collect(java.util.stream.Collectors.toList());
+    }
+
+    public PageInfo<Article> getAllUnbindArticlesPaged(int pageNum, int pageSize) {
+        return PageHelper.startPage(pageNum, pageSize)
+                .doSelectPageInfo(() -> this.getAllUnbindArticles());
+    }
+
     public List<Article> getToReviewArticles(int editorId) {
         List<Article> articles = articleMapper.getAllArticles();
-        Stream<Article> toReview = articles.stream().filter(article -> article.getStatus() == ArticleStatus.editorReview ||
-                article.getStatus() == ArticleStatus.editorRevision && article.getEditorId() == editorId);
+        Stream<Article> toReview = articles.stream().filter(article -> article.getEditorId() == editorId);
         return toReview.collect(java.util.stream.Collectors.toList());
     }
 
     public PageInfo<Article> getToReviewArticlesPaged(int editorId, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(this.getToReviewArticles(editorId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getToReviewArticles(editorId));
     }
 
     public List<Article> getReviewedArticles(int editorId) {
@@ -43,8 +52,7 @@ public class EditorService {
     }
 
     public PageInfo<Article> getReviewedArticlesPaged(int editorId, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(this.getReviewedArticles(editorId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getReviewedArticles(editorId));
     }
 
     public List<User> getAllExpert() {
@@ -52,8 +60,7 @@ public class EditorService {
     }
 
     public PageInfo<User> getAllExpertPaged(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(this.getAllExpert());
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getAllExpert());
     }
 
     public String assignExpert(int articleId, int expertId) {

@@ -69,4 +69,10 @@ class ArticleMapperTest {
         Integer editorId = articleMapper.getArticleEditor(2);
         assertNull(editorId);
     }
+
+    @Test
+    void getArticleWithNoEditor() {
+        List<Article> articles = articleMapper.getAllArticles();
+        assertNull(articles.get(0).getEditorId());
+    }
 }

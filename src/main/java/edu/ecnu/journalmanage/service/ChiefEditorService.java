@@ -34,8 +34,8 @@ public class ChiefEditorService {
     }
 
     public PageInfo<Article> getToReviewArticlesPaged(int chiefEditorId, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(this.getToReviewArticles(chiefEditorId));
+        return PageHelper.startPage(pageNum, pageSize)
+                .doSelectPageInfo(() -> this.getToReviewArticles(chiefEditorId));
     }
 
     public List<Article> getReviewedArticles(int chiefEditorId) {
@@ -46,8 +46,7 @@ public class ChiefEditorService {
     }
 
     public PageInfo<Article> getReviewedArticlesPaged(int chiefEditorId, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(this.getReviewedArticles(chiefEditorId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getReviewedArticles(chiefEditorId));
     }
 
     public String giveReviewToArticle(Review review, ReviewResult result) {

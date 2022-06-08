@@ -1,5 +1,6 @@
 package edu.ecnu.journalmanage.service;
 
+import com.github.pagehelper.PageInfo;
 import edu.ecnu.journalmanage.mapper.UserMapper;
 import edu.ecnu.journalmanage.model.Article;
 import edu.ecnu.journalmanage.model.Role;
@@ -33,5 +34,20 @@ class EditorServiceTest {
 
         List<Article> toReviewArticles = editorService.getToReviewArticles(user.getId());
         assertTrue(toReviewArticles.size() > 0);
+    }
+
+    @Test
+    void getToReviewArticleByEditor() {
+        PageInfo<Article> articlesPage = editorService.getToReviewArticlesPaged(33, 1, 2);
+        System.out.println(articlesPage);
+        assertTrue(articlesPage.getList().size() > 0);
+        assertTrue(articlesPage.isHasNextPage());
+    }
+
+    @Test
+    void getUnbindArticle() {
+        PageInfo<Article> paged = editorService.getAllUnbindArticlesPaged(1, 1);
+        assertTrue(paged.getList().size() > 0);
+        assertTrue(paged.isHasNextPage());
     }
 }

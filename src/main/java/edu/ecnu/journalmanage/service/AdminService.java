@@ -72,8 +72,7 @@ public class AdminService {
     }
 
     public PageInfo<User> getAllEditorsPaged(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(this.getAllEditors());
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getAllEditors());
     }
 
     public List<User> getAllExperts() {
@@ -81,8 +80,7 @@ public class AdminService {
     }
 
     public PageInfo<User> getAllExpertsPaged(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(this.getAllExperts());
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getAllExperts());
     }
 
     public String validateUser(int userId, Role role) {
