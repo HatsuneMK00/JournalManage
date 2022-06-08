@@ -3,6 +3,7 @@ package edu.ecnu.journalmanage.service;
 import edu.ecnu.journalmanage.model.Article;
 import edu.ecnu.journalmanage.model.ArticleStatus;
 import edu.ecnu.journalmanage.model.Review;
+import edu.ecnu.journalmanage.model.ReviewType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,9 +66,7 @@ class AuthorServiceTest {
     @Test
     void getArticleDetail() {
         Article article = authorService.getInProgressArticles(13).get(0);
-        Map<String, List<Review>> review = authorService.getReviewOfArticle(article.getId());
-
-
+        Map<ReviewType, List<Review>> review = authorService.getReviewOfArticle(article.getId());
 
         assertNotNull(article);
         assertEquals(1, article.getId());

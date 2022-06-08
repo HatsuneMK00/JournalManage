@@ -25,6 +25,12 @@ public class AuthorService {
         this.articleMapper = articleMapper;
     }
 
+    /**
+     * 点击提交文章时调用 注意在调用前需要使用FileService获取到文件保存的路径 填充进Article对象中
+     *
+     * @param article
+     * @return
+     */
     public String submitArticle(@NotNull Article article) {
         int affected = articleMapper.addArticle(article);
         if (affected == 0) {
@@ -34,6 +40,12 @@ public class AuthorService {
         return null;
     }
 
+    /**
+     * 退修的文章提交时调用这个函数 因为涉及到文章状态 注意不要调用错了
+     *
+     * @param article
+     * @return
+     */
     public String submitRevisionArticle(@NotNull Article article) {
         int affected = articleMapper.updateArticle(article);
         if (affected == 0) {
@@ -49,6 +61,8 @@ public class AuthorService {
             case chiefEditorReturned:
                 articleMapper.updateArticleStatus(article.getId(), ArticleStatus.chiefEditorRevision);
                 break;
+            default:
+                return "Article status is not correct, failed to update article status";
         }
         return null;
     }
@@ -59,6 +73,13 @@ public class AuthorService {
         return accepted.collect(java.util.stream.Collectors.toList());
     }
 
+    /**
+     * 获取当前用户的接受的文章
+     * @param authorId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     public PageInfo<Article> getAcceptedArticlesPaged(int authorId, int pageNum, int pageSize) {
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getAcceptedArticles(authorId));
     }
@@ -75,20 +96,33 @@ public class AuthorService {
         return accepted.collect(java.util.stream.Collectors.toList());
     }
 
+    /**
+     * 获取当前用户的进行中的文章
+     * @param authorId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     public PageInfo<Article> getInProgressArticlesPaged(int authorId, int pageNum, int pageSize) {
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getInProgressArticles(authorId));
     }
 
-    public Map<String, List<Review>> getReviewOfArticle(int articleId) {
+    /**
+     * 在展示文章详情时调用 获取文章的所有review
+     * review是一个map key为ReviewType value为Review对象的list 分别对应初审review 初审重审review等等6种
+     * @param articleId
+     * @return
+     */
+    public Map<ReviewType, List<Review>> getReviewOfArticle(int articleId) {
         List<Review> reviews = articleMapper.getReviewByArticle(articleId);
-        Map<String, List<Review>> reviewMap = new HashMap<>();
-        reviewMap.put(ReviewType.preliminaryReview.getString(), new ArrayList<>());
-        reviewMap.put(ReviewType.preliminaryRebuttalReview.getString(), new ArrayList<>());
-        reviewMap.put(ReviewType.externalReview.getString(), new ArrayList<>());
-        reviewMap.put(ReviewType.externalRebuttalReview.getString(), new ArrayList<>());
-        reviewMap.put(ReviewType.finalReview.getString(), new ArrayList<>());
-        reviewMap.put(ReviewType.finalRebuttalReview.getString(), new ArrayList<>());
-        reviews.stream().map((element) -> reviewMap.get(element.getType().getString()).add(element));
+        Map<ReviewType, List<Review>> reviewMap = new HashMap<>();
+        reviewMap.put(ReviewType.preliminaryReview, new ArrayList<>());
+        reviewMap.put(ReviewType.preliminaryRebuttalReview, new ArrayList<>());
+        reviewMap.put(ReviewType.externalReview, new ArrayList<>());
+        reviewMap.put(ReviewType.externalRebuttalReview, new ArrayList<>());
+        reviewMap.put(ReviewType.finalReview, new ArrayList<>());
+        reviewMap.put(ReviewType.finalRebuttalReview, new ArrayList<>());
+        reviews.stream().map((element) -> reviewMap.get(element.getType()).add(element));
         return reviewMap;
     }
 

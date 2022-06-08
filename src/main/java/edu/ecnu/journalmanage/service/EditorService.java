@@ -29,6 +29,12 @@ public class EditorService {
         return unbindArticles.collect(java.util.stream.Collectors.toList());
     }
 
+    /**
+     * 获取所有未绑定编辑的文章 即文章池
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     public PageInfo<Article> getAllUnbindArticlesPaged(int pageNum, int pageSize) {
         return PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.getAllUnbindArticles());
@@ -40,6 +46,11 @@ public class EditorService {
         return toReview.collect(java.util.stream.Collectors.toList());
     }
 
+    /**
+     * 获取绑定到该编辑的文章 包括点击了审稿但未提交审稿意见的文章
+     * @param editorId
+     * @return
+     */
     public PageInfo<Article> getToReviewArticlesPaged(int editorId, int pageNum, int pageSize) {
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getToReviewArticles(editorId));
     }
@@ -51,6 +62,13 @@ public class EditorService {
         return reviewed.collect(java.util.stream.Collectors.toList());
     }
 
+    /**
+     * 获取该编辑已经审稿的文章
+     * @param editorId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     public PageInfo<Article> getReviewedArticlesPaged(int editorId, int pageNum, int pageSize) {
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getReviewedArticles(editorId));
     }
@@ -59,15 +77,32 @@ public class EditorService {
         return userMapper.getUsersByRole(Role.expert);
     }
 
+    /**
+     * 获取可以选择的专家
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     public PageInfo<User> getAllExpertPaged(int pageNum, int pageSize) {
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getAllExpert());
     }
 
+    /**
+     * 点击提交审稿意见时调用 将编辑分配的专家与文章绑定
+     * @param articleId
+     * @param expertId
+     * @return
+     */
     public String assignExpert(int articleId, int expertId) {
         return articleMapper.updateArticleExpert(articleId, expertId) == 1 ? null : "fail to assign expert";
     }
 
-    // 绑定文章的编辑
+    /**
+     * 绑定一个编辑与一篇文章 在点击审稿按钮时调用 同时在提交审稿意见的时候这个函数也会被隐式调用
+     * @param articleId
+     * @param editorId
+     * @return
+     */
     public String bindEditor(int articleId, int editorId) {
         Integer editor = articleMapper.getArticleEditor(articleId);
         if (editor != null && editor != editorId) {
@@ -77,7 +112,12 @@ public class EditorService {
         return null;
     }
 
-    // 这个函数也有更新改文章的编辑为这条review的编辑的效果
+    /**
+     * 点击提高审稿意见时调用 将审稿意见与文章绑定
+     * @param review
+     * @param result
+     * @return
+     */
     public String giveReviewToArticle(Review review, ReviewResult result) {
         int affected = reviewMapper.addReviewToArticle(review);
         if (affected == 0) {
