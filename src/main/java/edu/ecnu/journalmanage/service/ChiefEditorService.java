@@ -63,6 +63,12 @@ public class ChiefEditorService {
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getReviewedArticles(chiefEditorId));
     }
 
+    /**
+     * 提交主编的审核意见时调用
+     * @param review
+     * @param result
+     * @return
+     */
     public String giveReviewToArticle(Review review, ReviewResult result) {
         int affected = reviewMapper.addReviewToArticle(review);
         if (affected == 0) {
