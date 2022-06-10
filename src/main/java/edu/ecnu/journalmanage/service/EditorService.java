@@ -37,7 +37,7 @@ public class EditorService {
      */
     public PageInfo<Article> getAllUnbindArticlesPaged(int pageNum, int pageSize) {
         return PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.getAllUnbindArticles());
+                .doSelectPageInfo(articleMapper::getAllUnbindArticles);
     }
 
     public List<Article> getToReviewArticles(int editorId) {
@@ -52,7 +52,7 @@ public class EditorService {
      * @return
      */
     public PageInfo<Article> getToReviewArticlesPaged(int editorId, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getToReviewArticles(editorId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> articleMapper.getToReviewArticlesByEditor(editorId));
     }
 
     public List<Article> getReviewedArticles(int editorId) {
@@ -70,7 +70,7 @@ public class EditorService {
      * @return
      */
     public PageInfo<Article> getReviewedArticlesPaged(int editorId, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getReviewedArticles(editorId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> articleMapper.getReviewedArticlesByEditor(editorId));
     }
 
     public List<User> getAllExpert() {
@@ -84,7 +84,7 @@ public class EditorService {
      * @return
      */
     public PageInfo<User> getAllExpertPaged(int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getAllExpert());
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(this::getAllExpert);
     }
 
     /**

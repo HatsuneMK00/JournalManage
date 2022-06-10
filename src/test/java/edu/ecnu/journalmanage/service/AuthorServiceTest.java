@@ -1,5 +1,6 @@
 package edu.ecnu.journalmanage.service;
 
+import com.github.pagehelper.PageInfo;
 import edu.ecnu.journalmanage.model.Article;
 import edu.ecnu.journalmanage.model.ArticleStatus;
 import edu.ecnu.journalmanage.model.Review;
@@ -51,13 +52,10 @@ class AuthorServiceTest {
      */
     @Test
     void getArticleStatus() {
-        List<Article> acceptedArticles = authorService.getAcceptedArticles(13);
-        assertTrue(acceptedArticles.size() > 0);
-        acceptedArticles = authorService.getAcceptedArticles(14);
-        assertEquals(0, acceptedArticles.size());
-
-        List<Article> inProgressArticles = authorService.getInProgressArticles(13);
-        assertTrue(inProgressArticles.size() > 0);
+        PageInfo<Article> acceptedArticlesPaged = authorService.getAcceptedArticlesPaged(13, 1, 5);
+        System.out.println(acceptedArticlesPaged);
+        PageInfo<Article> inProgressArticlesPaged = authorService.getInProgressArticlesPaged(13, 1, 5);
+        System.out.println(inProgressArticlesPaged);
     }
 
     /**

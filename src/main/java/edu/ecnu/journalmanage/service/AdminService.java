@@ -62,9 +62,7 @@ public class AdminService {
     }
 
     public PageInfo<User> getAllInvalidUsersPaged(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<User> users = userMapper.getAllInvalidUsers();
-        return new PageInfo<>(users);
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(userMapper::getAllInvalidUsers);
     }
 
     public List<User> getAllEditors() {
@@ -72,7 +70,7 @@ public class AdminService {
     }
 
     public PageInfo<User> getAllEditorsPaged(int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getAllEditors());
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(this::getAllEditors);
     }
 
     public List<User> getAllExperts() {
@@ -80,7 +78,7 @@ public class AdminService {
     }
 
     public PageInfo<User> getAllExpertsPaged(int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getAllExperts());
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(this::getAllExperts);
     }
 
     public String validateUser(int userId, Role role) {

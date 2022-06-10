@@ -42,7 +42,7 @@ public class ChiefEditorService {
      */
     public PageInfo<Article> getToReviewArticlesPaged(int chiefEditorId, int pageNum, int pageSize) {
         return PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.getToReviewArticles(chiefEditorId));
+                .doSelectPageInfo(() -> articleMapper.getToReviewArticlesByChiefEditor(chiefEditorId));
     }
 
     public List<Article> getReviewedArticles(int chiefEditorId) {
@@ -60,7 +60,7 @@ public class ChiefEditorService {
      * @return
      */
     public PageInfo<Article> getReviewedArticlesPaged(int chiefEditorId, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getReviewedArticles(chiefEditorId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> articleMapper.getReviewedArticlesByChiefEditor(chiefEditorId));
     }
 
     /**

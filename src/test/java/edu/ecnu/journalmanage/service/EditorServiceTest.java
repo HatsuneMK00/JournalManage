@@ -21,33 +21,24 @@ class EditorServiceTest {
     @Autowired
     UserMapper userMapper;
 
-    /**
-     * 测试获取代审稿件
-     */
-    @Test
-    void getToReviewArticle() {
-        User user = new User();
-        user.setName("editor" + UUID.randomUUID());
-        user.setPassword("123456");
-        user.setRole(Role.editor);
-        userMapper.addUser(user);
-
-        List<Article> toReviewArticles = editorService.getToReviewArticles(user.getId());
-        assertTrue(toReviewArticles.size() > 0);
-    }
-
     @Test
     void getToReviewArticleByEditor() {
-        PageInfo<Article> articlesPage = editorService.getToReviewArticlesPaged(33, 1, 2);
+        PageInfo<Article> articlesPage = editorService.getToReviewArticlesPaged(33, 1, 5);
         System.out.println(articlesPage);
         assertTrue(articlesPage.getList().size() > 0);
-        assertTrue(articlesPage.isHasNextPage());
     }
 
     @Test
     void getUnbindArticle() {
-        PageInfo<Article> paged = editorService.getAllUnbindArticlesPaged(1, 1);
+        PageInfo<Article> paged = editorService.getAllUnbindArticlesPaged(1, 5);
         assertTrue(paged.getList().size() > 0);
-        assertTrue(paged.isHasNextPage());
+        System.out.println(paged);
+    }
+
+    @Test
+    void getReviewedArticle() {
+        PageInfo<Article> paged = editorService.getReviewedArticlesPaged(33, 1,  5);
+        assertTrue(paged.getList().size() > 0);
+        System.out.println(paged);
     }
 }

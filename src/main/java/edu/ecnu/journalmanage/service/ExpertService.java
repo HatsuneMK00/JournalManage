@@ -31,7 +31,7 @@ public class ExpertService {
     }
 
     public PageInfo<Article> getToReviewArticlesPaged(int expertId, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getToReviewArticles(expertId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> articleMapper.getToReviewArticlesByExpert(expertId));
     }
 
     public List<Article> getReviewedArticles(int expertId) {
@@ -42,7 +42,7 @@ public class ExpertService {
     }
 
     public PageInfo<Article> getReviewedArticlesPaged(int expertId, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.getReviewedArticles(expertId));
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> articleMapper.getReviewedArticlesByExpert(expertId));
     }
 
     public String giveReviewToArticle(Review review, ReviewResult result) {

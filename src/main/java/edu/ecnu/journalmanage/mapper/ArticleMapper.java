@@ -60,4 +60,50 @@ public interface ArticleMapper {
     @Select("select * from review where article_id=#{articleId} order by update_time desc")
     List<Review> getReviewByArticle(int articleId);
 
+    @Select("select * from article where status=${@edu.ecnu.journalmanage.model.ArticleStatus@accepted.ordinal()} and author_id=#{authorId}")
+    List<Article> getAcceptedArticlesByAuthor(int authorId);
+
+    @Select("select * from article where author_id=#{authorId} and " +
+            "(status!=${@edu.ecnu.journalmanage.model.ArticleStatus@editorRejection.ordinal()} and " +
+            "status!=${@edu.ecnu.journalmanage.model.ArticleStatus@expertRejection.ordinal()} and " +
+            "status!=${@edu.ecnu.journalmanage.model.ArticleStatus@chiefEditorRejection.ordinal()} and " +
+            "status!=${@edu.ecnu.journalmanage.model.ArticleStatus@accepted.ordinal()} or " +
+            "status is NULL)")
+    List<Article> getInProgressArticlesByAuthor(int authorId);
+
+    @Select("select * from article where chief_editor_id=#{chiefEditorId} and " +
+            "(status=${@edu.ecnu.journalmanage.model.ArticleStatus@chiefEditorReview.ordinal()} or " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@chiefEditorRevision.ordinal()})")
+    List<Article> getToReviewArticlesByChiefEditor(int chiefEditorId);
+
+    @Select("select * from article where chief_editor_id=#{chiefEditorId} and " +
+            "(status=${@edu.ecnu.journalmanage.model.ArticleStatus@chiefEditorRejection.ordinal()} or " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@chiefEditorReturned.ordinal()} or " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@accepted.ordinal()})")
+    List<Article> getReviewedArticlesByChiefEditor(int chiefEditorId);
+
+    @Select("select * from article where editor_id is NULL")
+    List<Article> getAllUnbindArticles();
+
+    @Select("select * from article where editor_id=#{editorId} and " +
+            "(status=${@edu.ecnu.journalmanage.model.ArticleStatus@editorReview.ordinal()} or " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@editorRevision.ordinal()})")
+    List<Article> getToReviewArticlesByEditor(int editorId);
+
+    @Select("select * from article where editor_id=#{editorId} and " +
+            "(status=${@edu.ecnu.journalmanage.model.ArticleStatus@editorRejection.ordinal()} or " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@editorReturned.ordinal()} or " +
+            "status>${@edu.ecnu.journalmanage.model.ArticleStatus@editorRevision.ordinal()})")
+    List<Article> getReviewedArticlesByEditor(int editorId);
+
+    @Select("select * from article where expert_id=#{expertId} and " +
+            "(status=${@edu.ecnu.journalmanage.model.ArticleStatus@expertReview.ordinal()} or " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@expertRevision.ordinal()})")
+    List<Article> getToReviewArticlesByExpert(int expertId);
+
+    @Select("select * from article where expert_id=#{expertId} and " +
+            "(status=${@edu.ecnu.journalmanage.model.ArticleStatus@expertRejection.ordinal()} or " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@expertReturned.ordinal()} or " +
+            "status>${@edu.ecnu.journalmanage.model.ArticleStatus@expertRevision.ordinal()})")
+    List<Article> getReviewedArticlesByExpert(int expertId);
 }
