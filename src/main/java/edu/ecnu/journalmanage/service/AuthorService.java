@@ -10,10 +10,7 @@ import edu.ecnu.journalmanage.model.ReviewType;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Service
@@ -47,6 +44,7 @@ public class AuthorService {
      * @return
      */
     public String submitRevisionArticle(@NotNull Article article) {
+        article.setUpdateTime(new Date());
         int affected = articleMapper.updateArticle(article);
         if (affected == 0) {
             return "Update article failed";
