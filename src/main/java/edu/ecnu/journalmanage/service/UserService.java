@@ -28,6 +28,7 @@ public class UserService {
     }
 
     public String register(User user) {
+        String err;
         if (user.getRole() == null) {
             return "User role cannot be null";
         }
@@ -35,7 +36,12 @@ public class UserService {
             return "Admin cannot register";
         }
         user.setValid(user.getRole() == Role.author);
-        int affected = userMapper.addUser(user);
+        int affected;
+        try {
+            affected = userMapper.addUser(user);
+        } catch (Exception e) {
+            return "Register failed with exception: " + e.getMessage();
+        }
         return affected == 1 ? null : "Register failed";
     }
 

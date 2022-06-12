@@ -93,4 +93,19 @@ class UserServiceTest {
         assertEquals(oldValid, user.isValid());
     }
 
+    @Test
+    void registerDuplicatedUser() {
+        User user = new User();
+        user.setName("test" + UUID.randomUUID());
+        user.setPassword("123456");
+        user.setRole(Role.author);
+        String err = userService.register(user);
+        assertNull(err);
+        assertEquals(Role.author, user.getRole());
+        assertTrue(user.getId() > 0);
+        assertTrue(user.isValid());
+
+        err = userService.register(user);
+        assertNotNull(err);
+    }
 }
