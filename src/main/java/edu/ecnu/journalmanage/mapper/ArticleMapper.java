@@ -71,6 +71,12 @@ public interface ArticleMapper {
             "status is NULL)")
     List<Article> getInProgressArticlesByAuthor(int authorId);
 
+    @Select("select * from article where author_id=#{authorId} and " +
+            "(status=${@edu.ecnu.journalmanage.model.ArticleStatus@editorRejection.ordinal()} or " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@expertRejection.ordinal()} or " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@chiefEditorRejection.ordinal()})")
+    List<Article> getRejectedArticlesByAuthor(int authorId);
+
     @Select("select * from article where chief_editor_id=#{chiefEditorId} and " +
             "(status=${@edu.ecnu.journalmanage.model.ArticleStatus@chiefEditorReview.ordinal()} or " +
             "status=${@edu.ecnu.journalmanage.model.ArticleStatus@chiefEditorRevision.ordinal()})")

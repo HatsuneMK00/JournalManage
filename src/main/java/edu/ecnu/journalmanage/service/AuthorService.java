@@ -107,6 +107,10 @@ public class AuthorService {
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> articleMapper.getInProgressArticlesByAuthor(authorId));
     }
 
+    public PageInfo<Article> getRejectedArticlesPaged(int authorId, int pageNum, int pageSize) {
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> articleMapper.getRejectedArticlesByAuthor(authorId));
+    }
+
     /**
      * 在展示文章详情时调用 获取文章的所有review
      * review是一个map key为ReviewType value为Review对象的list 分别对应初审review 初审重审review等等6种

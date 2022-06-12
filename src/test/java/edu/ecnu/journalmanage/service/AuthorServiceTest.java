@@ -70,4 +70,10 @@ class AuthorServiceTest {
         assertEquals(1, article.getId());
     }
 
+    @Test
+    void getRejectedArticle() {
+        PageInfo<Article> rejectedArticlesPaged = authorService.getRejectedArticlesPaged(13, 1, 5);
+        System.out.println(rejectedArticlesPaged);
+    }
+
 }
