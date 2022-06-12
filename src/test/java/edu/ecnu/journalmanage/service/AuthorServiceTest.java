@@ -67,7 +67,6 @@ class AuthorServiceTest {
         Map<ReviewType, List<Review>> review = authorService.getReviewOfArticle(article.getId());
 
         assertNotNull(article);
-        assertEquals(1, article.getId());
     }
 
     @Test

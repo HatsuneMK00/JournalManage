@@ -73,6 +73,7 @@ class ArticleMapperTest {
     @Test
     void getArticleWithNoEditor() {
         List<Article> articles = articleMapper.getAllArticles();
-        assertNull(articles.get(0).getEditorId());
+        System.out.println(articles);
+        assertNull(articles.get(articles.size() - 1).getEditorId());
     }
 }
