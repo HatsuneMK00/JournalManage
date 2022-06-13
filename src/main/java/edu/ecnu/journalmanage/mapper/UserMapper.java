@@ -32,7 +32,7 @@ public interface UserMapper {
     int addUser(User user);
 
     // update user(name, password, role, valid, researchArea, title)
-    @Update("update user set name=#{name}, password=#{password}, valid=#{valid}, research_area=#{researchArea}, title=#{title}, email=#{email} where id=#{id}")
+    @Update("update user set name=#{name}, password=#{password}, research_area=#{researchArea}, title=#{title}, email=#{email} where id=#{id}")
     int updateUser(User user);
 
     @Update("update user set valid=#{valid} where id=#{userId}")
