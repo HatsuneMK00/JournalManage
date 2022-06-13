@@ -26,6 +26,12 @@ class UserMapperTest {
     }
 
     @Test
+    void getNotExistUserById() {
+        User user = userMapper.getUserById(0);
+        assertNull(user);
+    }
+
+    @Test
     void addUser() {
         User user = new User();
         String name = "test" + System.currentTimeMillis();
