@@ -76,4 +76,32 @@ class ArticleMapperTest {
         System.out.println(articles);
         assertNull(articles.get(articles.size() - 1).getEditorId());
     }
+
+    @Test
+    void addArticleWithMultipleAuthors() {
+        Article article = new Article();
+        article.setAuthorId(13);
+        article.setAbstractText("abstract");
+        article.setTitle("title");
+        article.setKeywords("keywords");
+        article.setFilePath("filePath");
+        article.setAuthors("1, 2, 3, 4, 5");
+        int affected = articleMapper.addArticle(article);
+        assertEquals(1, affected);
+    }
+
+    @Test
+    void updateArticleWithMultipleAuthors() {
+        Article article = new Article();
+        article.setAuthorId(13);
+        article.setAbstractText("abstract");
+        article.setTitle("title");
+        article.setKeywords("keywords");
+        article.setFilePath("filePath");
+        article.setAuthors("1, 2, 3, 4, 5");
+        int affected = articleMapper.addArticle(article);
+
+        article.setAuthors("1, 5, 4");
+        articleMapper.updateArticle(article);
+    }
 }

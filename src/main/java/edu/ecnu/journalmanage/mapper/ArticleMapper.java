@@ -10,12 +10,12 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into article(title, author_id, abstract_text, keywords, file_path, status, " +
-            "create_time, update_time) values(#{title}, #{authorId}, " +
+    @Insert("insert into article(title, author_id, authors, abstract_text, keywords, file_path, status, " +
+            "create_time, update_time) values(#{title}, #{authorId}, #{authors}, " +
             "#{abstractText}, #{keywords}, #{filePath}, #{status}, #{createTime}, #{updateTime})")
     int addArticle(Article article);
 
-    @Update("update article set title=#{title}, author=#{author}, abstract_text=#{abstractText}, " +
+    @Update("update article set title=#{title}, authors=#{authors}, abstract_text=#{abstractText}, " +
             "keywords=#{keywords}, file_path=#{filePath}, update_time=#{updateTime} " +
             "where id=#{id}")
     int updateArticle(Article article);

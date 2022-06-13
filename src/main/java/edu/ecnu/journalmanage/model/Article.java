@@ -18,4 +18,5 @@ public class Article {
     private Date createTime = new Date();
     private Date updateTime = new Date();
     private String keywords;
+    private String authors;
 }
