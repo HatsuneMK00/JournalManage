@@ -124,7 +124,7 @@ public class AuthorService {
         reviewMap.put(ReviewType.externalRebuttalReview, new ArrayList<>());
         reviewMap.put(ReviewType.finalReview, new ArrayList<>());
         reviewMap.put(ReviewType.finalRebuttalReview, new ArrayList<>());
-        reviews.stream().map((element) -> reviewMap.get(element.getType()).add(element));
+        reviews.stream().forEach((element) -> reviewMap.get(element.getType()).add(element));
         return reviewMap;
     }
 

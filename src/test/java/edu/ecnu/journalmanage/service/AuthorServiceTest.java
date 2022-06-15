@@ -75,4 +75,10 @@ class AuthorServiceTest {
         System.out.println(rejectedArticlesPaged);
     }
 
+    @Test
+    void getArticleReview() {
+        Map<ReviewType, List<Review>> reviewOfArticle = authorService.getReviewOfArticle(2);
+        System.out.println(reviewOfArticle);
+    }
+
 }
