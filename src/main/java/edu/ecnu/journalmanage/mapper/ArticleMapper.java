@@ -88,7 +88,9 @@ public interface ArticleMapper {
             "status=${@edu.ecnu.journalmanage.model.ArticleStatus@accepted.ordinal()}) order by update_time desc")
     List<Article> getReviewedArticlesByChiefEditor(int chiefEditorId);
 
-    @Select("select * from article where editor_id is NULL order by update_time desc")
+    @Select("select * from article where " +
+            "status=${@edu.ecnu.journalmanage.model.ArticleStatus@editorReview.ordinal()} or " +
+            "status is NULL order by update_time desc")
     List<Article> getAllUnbindArticles();
 
     @Select("select * from article where editor_id=#{editorId} and " +
