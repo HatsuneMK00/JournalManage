@@ -2,9 +2,7 @@ package edu.ecnu.journalmanage.service;
 
 import com.github.pagehelper.PageInfo;
 import edu.ecnu.journalmanage.mapper.UserMapper;
-import edu.ecnu.journalmanage.model.Article;
-import edu.ecnu.journalmanage.model.Role;
-import edu.ecnu.journalmanage.model.User;
+import edu.ecnu.journalmanage.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,5 +38,15 @@ class EditorServiceTest {
         PageInfo<Article> paged = editorService.getReviewedArticlesPaged(33, 1,  5);
         assertTrue(paged.getList().size() > 0);
         System.out.println(paged);
+    }
+
+    @Test
+    void giveReviewToArticle() {
+        Review review = new Review();
+        review.setArticleId(31);
+        review.setReviewerId(13);
+        review.setContent("这是一篇文章的评审");
+        review.setType(ReviewType.preliminaryReview);
+        editorService.giveReviewToArticle(review, ReviewResult.pass);
     }
 }

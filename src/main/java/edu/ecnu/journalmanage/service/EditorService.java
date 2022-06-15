@@ -98,7 +98,7 @@ public class EditorService {
     }
 
     /**
-     * 绑定一个编辑与一篇文章 在点击审稿按钮时调用 同时在提交审稿意见的时候这个函数也会被隐式调用
+     * 绑定一个编辑与一篇文章
      * @param articleId
      * @param editorId
      * @return
@@ -125,16 +125,19 @@ public class EditorService {
         }
         switch (result) {
             case pass:
-                articleMapper.updateArticleStatus(review.getArticleId(), ArticleStatus.expertRevision);
+                affected = articleMapper.updateArticleStatus(review.getArticleId(), ArticleStatus.expertReview);
                 break;
             case reject:
-                articleMapper.updateArticleStatus(review.getArticleId(), ArticleStatus.editorRejection);
+                affected = articleMapper.updateArticleStatus(review.getArticleId(), ArticleStatus.editorRejection);
                 break;
             case revise:
-                articleMapper.updateArticleStatus(review.getArticleId(), ArticleStatus.editorReturned);
+                affected = articleMapper.updateArticleStatus(review.getArticleId(), ArticleStatus.editorReturned);
                 break;
         }
-        return this.bindEditor(review.getArticleId(), review.getReviewerId());
+        if (affected == 0) {
+            return "fail to update article status";
+        }
+        return null;
     }
 
 }
