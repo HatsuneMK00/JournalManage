@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SMART PAPER</title>
+    <link rel="stylesheet" href="../css/submitpaper.css" type="text/css" />
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<form action="/changeInfos" type="post" class="layui-form">
+    <section class="content">
+        <div class="content-header clearfix">
+            <!-- 当前默认显示登陆界面-->
+            <b style="font-size: large">用户个人信息</b>
+        </div>
+
+        <div class="content-body">
+            <div class="dom" style="display: block;">
+                <div class="s1">
+                    <h4>用户名</h4>
+                    <input type="text" name="username" class="un">
+                </div>
+                <div class="s1">
+                    <h4>修改密码</h4>
+                    <input type="password" name="pwd1" class="pwd">
+                </div>
+                <div class="s1">
+                    <h4>确认密码</h4>
+                    <input type="password" name="pwd2" class="pwd1">
+                </div>
+                <div class="s1">
+                    <h4>邮箱</h4>
+                    <input type="email" name="email" class="email">
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </section>
+
+<!--    <section class="content">-->
+<!--        <div class="content-header clearfix">-->
+<!--            &lt;!&ndash; 当前默认显示登陆界面&ndash;&gt;-->
+<!--            <b style="font-size: large">研究领域</b>-->
+<!--        </div>-->
+
+<!--        <div class="content-body">-->
+<!--            <div class="dom" style="display: block;">-->
+<!--                <div class="s1" style="height: 10rem">-->
+<!--                    <h4>研究方向</h4>-->
+<!--                    <textarea name="research_area"></textarea>-->
+<!--                </div>-->
+<!--                <br><br>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <div style="text-align: center">
+        <button type="reset" class="layui-btn layui-btn-danger">重置</button>
+        <button type="button" class="layui-btn layui-btn-normal changeBtn">提交</button>
+    </div>
+</form>
+<script src="../layui/layui.js"></script>
+<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+
+        $(function () {
+            $(".changeBtn").click(function () {
+                var username = $(".un").val();
+                var password = $(".pwd").val();
+                var password1 = $(".pwd1").val();
+                var email = $(".email").val();
+                $.ajax({
+                    url: "/changeInfos",
+                    data: {
+                        "username": username,
+                        "password": password,
+                        "password1": password1,
+                        "email": email
+                    },
+                    type: "post",
+                    success: function (data) {
+                        if(data==="success"){
+                            layer.alert("信息修改成功，请重新登录!", {icon:1}, function (){
+                                window.location.href="/login";
+                            });
+                        } else if(data==="pwd_not_equal"){
+                            layer.alert("两次密码不一致!", {icon:2}, function (){
+                                window.location.href="/changeInfo";
+                            });
+                        } else {
+                            layer.alert("信息修改失败!", {icon:2}, function (){
+                                window.location.href="/changeInfo";
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>

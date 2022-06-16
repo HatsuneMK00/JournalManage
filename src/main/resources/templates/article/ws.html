@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SMART PAPER</title>
+    <link rel="stylesheet" href="../css/submitpaper.css" type="text/css" />
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        body{
+            background: url("../images/loginbg.jpg") no-repeat 0 0;
+            background-size: cover;
+        }
+        h4{
+            color: black!important;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">稿件内容</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <div class="s1">
+                <h4>标题：<span th:text="${article_Detail.title}" style="font-size: large; color: crimson"></span></h4>
+            </div>
+            <div class="s1">
+                <h4>作者：<span th:text="${article_Detail.authors}" style="font-size: large; color: crimson"></span></h4>
+            </div>
+            <div class="s1" style="height: 10rem">
+                <h4>摘要：<span th:text="${article_Detail.abstractText}" style="font-size: large; color: crimson"></span></h4>
+            </div>
+            <div class="s1">
+                <h4>关键词：<span th:text="${article_Detail.keywords}" style="font-size: large; color: crimson"></span></h4>
+            </div>
+            <div style="text-align: center">
+                <a th:href="@{'/fileDownload?articleID='+${article_Detail.id}}" style="text-decoration: none;
+                    color: #1E9FFF; font-size: large; font-weight: bold">稿件下载</a>
+            </div>
+            <br><br>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">审核流程状态</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <div class="s1">
+                <h4>当前状态:  <span style="font-size: large; color: crimson">外审</span></h4>
+            </div>
+            <br>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">初审意见</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="100">
+                    <col width="100">
+                    <col width="250">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>初审编辑ID</th>
+                    <th>初审意见</th>
+                    <th>意见类型</th>
+                    <th>评价时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review:${CS_reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.reviewerId}"></td>
+                    <td th:text="${review.content}"></td>
+                    <td th:text="${review.type}"></td>
+                    <td th:text="${review.createTime}"></td>
+                </tr>
+                <tr th:each="review:${CSCS_reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.reviewerId}"></td>
+                    <td th:text="${review.content}"></td>
+                    <td th:text="${review.type}"></td>
+                    <td th:text="${review.createTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <br><br>
+        </div>
+    </div>
+</section>
+<script src="../layui/layui.js"></script>
+<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+</body>
+</html>

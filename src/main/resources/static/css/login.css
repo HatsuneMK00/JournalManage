@@ -1,0 +1,180 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+}
+
+ul li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+input, button{
+    outline: none;
+}
+
+html{
+    font-size: 10px;
+}
+
+body{
+    font-size: 1.6rem;
+    background: url("../images/loginbg.jpg") no-repeat 0 0;
+    background-size: cover;
+}
+
+.clearfix::before,
+.clearfix::after{
+    content: '';
+    display: table;
+    clear: both;
+}
+
+#content{
+    width: 50rem;
+    /*height: 60rem;*/
+    border: 0.1rem solid #ebebeb;
+    margin:5rem auto;
+    background-color: white;
+}
+
+#content .content-header{
+    width: 100%;
+    height: 6rem;
+    text-align: center;
+    line-height: 6rem;
+}
+
+#content .content-header a{
+    display: inline-block;
+    width: 50%;
+    height: 6rem;
+    float: left;
+    background-color: #f5f5f5;
+    color: black;
+}
+
+#content .content-header a.current{
+    background-color: white;
+    color: purple;
+}
+
+#content .content-body .dom{
+    width: 100%;
+    display: none;
+}
+
+#content .content-body .s1{
+    margin-top: 3rem;
+    width: 100%;
+    height: 6rem;
+    padding-left: 4.6rem;
+}
+
+#content .content-body .s1 h4{
+    color: gray;
+    font-weight: bolder;
+}
+
+#content .content-body .s1 input{
+    width: 90%;
+    height: 4rem;
+    border-radius: 0.5rem;
+    border: 1px solid #cccccc;
+    padding-left: 1rem;
+}
+
+#content .content-body .s1 select{
+    width: 90%;
+    height: 4rem;
+    border-radius: 0.5rem;
+    border: 1px solid #cccccc;
+    padding-left: 1rem;
+}
+
+#content .content-body .s1 .msg-input{
+    width: 55%;
+    height: 4rem;
+    float: left;
+}
+
+#content .content-body .s1 .msg-btn{
+    width: 30%;
+    height: 4rem;
+    float: left;
+    color: #555555;
+    font-weight: bolder;
+    text-align: center;
+    margin-left: 5%;
+
+}
+
+
+#content .content-body .s2{
+    width: 100%;
+    height: 2rem;
+    margin-top: 2rem;
+    padding-left: 5rem;
+}
+
+#content .content-body .s3{
+    width: 100%;
+    height: 3.5rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+#content .content-body .s3 input{
+    width: 70%;
+    height: 3.5rem;
+    background-color: purple;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.8rem;
+    color: white;
+    font-weight: bolder;
+}
+
+#content .content-body .s4{
+    margin: 2rem 0 3rem 7rem;
+    width: 100%;
+    height: 4rem;
+    display: inline-block;
+    line-height: 4rem;
+    float:left;
+    padding-left: 3rem;
+}
+
+#content .content-body .s4 span{
+    padding: 0 0.8rem;
+}
+
+#content .content-body .s4 a{
+    color: purple;
+}
+
+#content .content-body .s5{
+    width: 100%;
+    text-align: center;
+}
+
+#content .content-body .s5 span{
+    color: #555555;
+    font-weight: bolder;
+}
+
+#content .content-body .s6
+{
+    margin-top: 3rem;
+    text-align: center;
+}
+
+#content .content-body .s6 img{
+    width: 5rem;
+    height: 5rem;
+    margin-left: 2rem;
+}

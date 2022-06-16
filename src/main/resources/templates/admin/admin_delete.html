@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SMART PAPER</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/submitpaper.css" type="text/css" />
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style type="text/css">
+        body{
+            background: url("../images/loginbg.jpg") no-repeat 0 0;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">编辑列表</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="100">
+                    <col width="200">
+                    <col width="150">
+                    <col width="150">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <th>账户是否生效</th>
+                    <th>删除操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="aed : ${allEditors.list}">
+                    <td th:text="${aed.id}"></td>
+                    <td th:text="${aed.name}"></td>
+                    <td th:text="${aed.email}"></td>
+                    <td th:text="${aed.valid}"></td>
+                    <td style="font-weight: bold"><a th:href="@{'/deleteUser?userID='+${aed.id}}" style="text-decoration: none; color: crimson">删除用户</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                    <span style="font-weight: bold">当前第 [[${allEditors.pageNum}]] 页, 共 [[${allEditors.pages}]] 页。
+                         一共 [[${allEditors.total}]] 条记录</span><br>
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a th:href="'/adminDelete?EditorpageNum=1'">首页</a>
+                        </li>
+
+                        <li th:if="${allEditors.hasPreviousPage}">
+                            <a th:href="'/adminDelete?EditorpageNum='+${allEditors.prePage}">
+                                <i class="layui-icon layui-icon-prev" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+                        <!--遍历条数-->
+                        <li th:each="nav:${allEditors.navigatepageNums}">
+                            <a th:href="'/adminDelete?EditorpageNum='+${nav}" th:text="${nav}" th:if="${nav != allEditors.pageNum}"></a>
+                            <span style="font-weight: bold;background: #6faed9;" th:if="${nav == allEditors.pageNum}" th:text="${nav}" ></span>
+                        </li>
+
+                        <li th:if="${allEditors.hasNextPage}">
+                            <a th:href="'/adminDelete?EditorpageNum='+${allEditors.nextPage}">
+                                <i class="layui-icon layui-icon-next" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="'/adminDelete?EditorpageNum='+${allEditors.pages}">尾页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">专家列表</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="100">
+                    <col width="200">
+                    <col width="150">
+                    <col width="150">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <th>账户是否生效</th>
+                    <th>删除操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="aep : ${allExperts.list}">
+                    <td th:text="${aep.id}"></td>
+                    <td th:text="${aep.name}"></td>
+                    <td th:text="${aep.email}"></td>
+                    <td th:text="${aep.valid}"></td>
+                    <td style="font-weight: bold"><a th:href="@{'/deleteUser?userID='+${aep.id}}" style="text-decoration: none; color: crimson">删除用户</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                    <span style="font-weight: bold">当前第 [[${allExperts.pageNum}]] 页, 共 [[${allExperts.pages}]] 页。
+                         一共 [[${allExperts.total}]] 条记录</span><br>
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a th:href="'/adminDelete?ExpertpageNum=1'">首页</a>
+                        </li>
+
+                        <li th:if="${allExperts.hasPreviousPage}">
+                            <a th:href="'/adminDelete?ExpertpageNum='+${allExperts.prePage}">
+                                <i class="layui-icon layui-icon-prev" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+                        <!--遍历条数-->
+                        <li th:each="nav:${allExperts.navigatepageNums}">
+                            <a th:href="'/adminDelete?ExpertpageNum='+${nav}" th:text="${nav}" th:if="${nav != allExperts.pageNum}"></a>
+                            <span style="font-weight: bold;background: #6faed9;" th:if="${nav == allExperts.pageNum}" th:text="${nav}" ></span>
+                        </li>
+
+                        <li th:if="${allExperts.hasNextPage}">
+                            <a th:href="'/adminDelete?ExpertpageNum='+${allExperts.nextPage}">
+                                <i class="layui-icon layui-icon-next" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="'/adminDelete?ExpertpageNum='+${allExperts.pages}">尾页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="../layui/layui.js"></script>
+<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+</script>
+</body>
+</html>

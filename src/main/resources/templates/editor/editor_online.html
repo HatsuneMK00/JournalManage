@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SMART PAPER</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/submitpaper.css" type="text/css" />
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style type="text/css">
+        body{
+            background: url("../images/loginbg.jpg") no-repeat 0 0;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">稿件池</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="100">
+                    <col width="200">
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>论文名称</th>
+                    <th>论文状态</th>
+                    <th>时间</th>
+                    <th>审稿</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="article : ${allUnbindArticles.list}">
+                    <td th:text="${article.id}"></td>
+                    <td style="font-weight: bold"><a th:text="${article.title}" th:href="@{'/fileDownload?articleID='+${article.id}}" style="text-decoration: none; color: #1E9FFF"></a></td>
+                    <td th:text="${article.status}"></td>
+                    <td th:text="${article.createTime}"></td>
+                    <td style="font-weight: bold"><a th:href="@{'/editorReview?articleID='+${article.id}}" style="text-decoration: none; color: #1E9FFF">开始审稿</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                    <span style="font-weight: bold">当前第 [[${allUnbindArticles.pageNum}]] 页, 共 [[${allUnbindArticles.pages}]] 页。
+                         一共 [[${allUnbindArticles.total}]] 条记录</span>
+                <br>
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a th:href="'/editorOnline?UnbindpageNum=1'">首页</a>
+                        </li>
+
+                        <li th:if="${allUnbindArticles.hasPreviousPage}">
+                            <a th:href="'/editorOnline?UnbindpageNum='+${allUnbindArticles.prePage}">
+                                <i class="layui-icon layui-icon-prev" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+                        <!--遍历条数-->
+                        <li th:each="nav:${allUnbindArticles.navigatepageNums}">
+                            <a th:href="'/editorOnline?UnbindpageNum='+${nav}" th:text="${nav}" th:if="${nav != allUnbindArticles.pageNum}"></a>
+                            <span style="font-weight: bold;background: #6faed9;" th:if="${nav == allUnbindArticles.pageNum}" th:text="${nav}" ></span>
+                        </li>
+
+                        <li th:if="${allUnbindArticles.hasNextPage}">
+                            <a th:href="'/editorOnline?UnbindpageNum='+${allUnbindArticles.nextPage}">
+                                <i class="layui-icon layui-icon-next" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="'/editorOnline?UnbindpageNum='+${allUnbindArticles.pages}">尾页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">待审稿件</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="100">
+                    <col width="200">
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>论文名称</th>
+                    <th>论文状态</th>
+                    <th>时间</th>
+                    <th>审稿</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="acc : ${toReviewArticles.list}">
+                    <td th:text="${acc.id}"></td>
+                    <td style="font-weight: bold"><a th:text="${acc.title}" th:href="@{'/fileDownload?articleID='+${acc.id}}" style="text-decoration: none; color: #1E9FFF"></a></td>
+                    <td th:text="${acc.status}"></td>
+                    <td th:text="${acc.createTime}"></td>
+                    <td style="font-weight: bold"><a th:href="@{'/editorReview?articleID='+${acc.id}}" style="text-decoration: none; color: #1E9FFF">开始审稿</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                    <span style="font-weight: bold">当前第 [[${toReviewArticles.pageNum}]] 页, 共 [[${toReviewArticles.pages}]] 页。
+                         一共 [[${toReviewArticles.total}]] 条记录</span><br>
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a th:href="'/editorOnline?ToreviewpageNum=1'">首页</a>
+                        </li>
+
+                        <li th:if="${toReviewArticles.hasPreviousPage}">
+                            <a th:href="'/editorOnline?ToreviewpageNum='+${toReviewArticles.prePage}">
+                                <i class="layui-icon layui-icon-prev" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+                        <!--遍历条数-->
+                        <li th:each="nav:${toReviewArticles.navigatepageNums}">
+                            <a th:href="'/editorOnline?ToreviewpageNum='+${nav}" th:text="${nav}" th:if="${nav != toReviewArticles.pageNum}"></a>
+                            <span style="font-weight: bold;background: #6faed9;" th:if="${nav == toReviewArticles.pageNum}" th:text="${nav}" ></span>
+                        </li>
+
+                        <li th:if="${toReviewArticles.hasNextPage}">
+                            <a th:href="'/editorOnline?ToreviewpageNum='+${toReviewArticles.nextPage}">
+                                <i class="layui-icon layui-icon-next" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="'/editorOnline?ToreviewpageNum='+${toReviewArticles.pages}">尾页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">已审稿件</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="100">
+                    <col width="200">
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>论文名称</th>
+                    <th>论文状态</th>
+                    <th>时间</th>
+                    <th>详情</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="rej : ${reviewedArticles.list}">
+                    <td th:text="${rej.id}"></td>
+                    <td style="font-weight: bold"><a th:text="${rej.title}" th:href="@{'/fileDownload?articleID='+${rej.id}}" style="text-decoration: none; color: #1E9FFF"></a></td>
+                    <td th:text="${rej.status}"></td>
+                    <td th:text="${rej.createTime}"></td>
+                    <td style="font-weight: bold"><a th:href="@{'/articleDetail?articleID='+${rej.id}}" style="text-decoration: none; color: #1E9FFF">查看详情</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                    <span style="font-weight: bold">当前第 [[${reviewedArticles.pageNum}]] 页, 共 [[${reviewedArticles.pages}]] 页。
+                         一共 [[${reviewedArticles.total}]] 条记录</span><br>
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a th:href="'/editorOnline?ReviewedpageNum=1'">首页</a>
+                        </li>
+
+                        <li th:if="${reviewedArticles.hasPreviousPage}">
+                            <a th:href="'/editorOnline?ReviewedpageNum='+${reviewedArticles.prePage}">
+                                <i class="layui-icon layui-icon-prev" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+                        <!--遍历条数-->
+                        <li th:each="nav:${reviewedArticles.navigatepageNums}">
+                            <a th:href="'/editorOnline?ReviewedpageNum='+${nav}" th:text="${nav}" th:if="${nav != reviewedArticles.pageNum}"></a>
+                            <span style="font-weight: bold;background: #6faed9;" th:if="${nav == reviewedArticles.pageNum}" th:text="${nav}" ></span>
+                        </li>
+
+                        <li th:if="${reviewedArticles.hasNextPage}">
+                            <a th:href="'/editorOnline?ReviewedpageNum='+${reviewedArticles.nextPage}">
+                                <i class="layui-icon layui-icon-next" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="'/editorOnline?ReviewedpageNum='+${reviewedArticles.pages}">尾页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="../layui/layui.js"></script>
+<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+</script>
+</body>
+</html>

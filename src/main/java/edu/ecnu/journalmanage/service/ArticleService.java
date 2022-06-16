@@ -12,7 +12,7 @@ public class ArticleService {
         this.articleMapper = articleMapper;
     }
 
-    Article getArticleById(int articleId) {
+    public Article getArticleById(int articleId) {
         return articleMapper.getArticleById(articleId);
     }
 }

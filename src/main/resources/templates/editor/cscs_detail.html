@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SMART PAPER</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/submitpaper.css" type="text/css" />
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        body{
+            background: url("../images/loginbg.jpg") no-repeat 0 0;
+            background-size: cover;
+        }
+        h4{
+            color: black!important;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">稿件内容</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <div class="s1">
+                <input type="text" th:value="${eR_article.id}" style="display: none" class="Aid"></input>
+                <h4>标题：<span th:text="${eR_article.title}" style="font-size: large; color: crimson"></span></h4>
+            </div>
+            <div class="s1">
+                <h4>作者：<span th:text="${eR_article.authors}" style="font-size: large; color: crimson"></span></h4>
+            </div>
+            <div class="s1" style="height: 10rem">
+                <h4>摘要：<span th:text="${eR_article.abstractText}" style="font-size: large; color: crimson"></span></h4>
+            </div>
+            <div class="s1">
+                <h4>关键词：<span th:text="${eR_article.keywords}" style="font-size: large; color: crimson"></span></h4>
+            </div>
+            <div style="text-align: center">
+                <a th:href="@{'/fileDownload?articleID='+${eR_article.id}}" style="text-decoration: none;
+                    color: #1E9FFF; font-size: large; font-weight: bold">稿件下载</a>
+            </div>
+            <br><br>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">审核流程状态</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <div class="s1">
+                <h4>当前状态:  <span style="font-size: large; color: crimson">初审重审</span></h4>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">初审意见</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="100">
+                    <col width="100">
+                    <col width="250">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>初审编辑ID</th>
+                    <th>初审意见</th>
+                    <th>意见类型</th>
+                    <th>评价时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review:${CS_reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.reviewerId}"></td>
+                    <td th:text="${review.content}"></td>
+                    <td th:text="${review.type}"></td>
+                    <td th:text="${review.createTime}"></td>
+                </tr>
+                <tr th:each="review:${CSCS_reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.reviewerId}"></td>
+                    <td th:text="${review.content}"></td>
+                    <td th:text="${review.type}"></td>
+                    <td th:text="${review.createTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <br><br>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">编辑初审意见</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <div class="s1" style="height: 10rem">
+                <textarea placeholder="编辑请输入审稿意见" class="ed_content"></textarea>
+            </div>
+            <br><br>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">专家列表</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="80">
+                    <col width="300">
+                    <col width="250">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>专家名称</th>
+                    <th>邮箱</th>
+                    <th>点击所在行选择专家</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="aep : ${allExpert.list}">
+                    <td th:text="${aep.id}"></td>
+                    <td th:text="${aep.name}"></td>
+                    <td th:text="${aep.email}"></td>
+                    <td style="text-align: center"><input th:type="radio" th:value="${aep.id}" class="select_Expert"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                    <span style="font-weight: bold">当前第 [[${allExpert.pageNum}]] 页, 共 [[${allExpert.pages}]] 页。
+                         一共 [[${allExpert.total}]] 条记录</span><br>
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a th:href="'/editorReview?expageNum=1'">首页</a>
+                        </li>
+
+                        <li th:if="${allExpert.hasPreviousPage}">
+                            <a th:href="'/editorReview?expageNum='+${allExpert.prePage}">
+                                <i class="layui-icon layui-icon-prev" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+                        <!--遍历条数-->
+                        <li th:each="nav:${allExpert.navigatepageNums}">
+                            <a th:href="'/editorReview?expageNum='+${nav}" th:text="${nav}" th:if="${nav != allExpert.pageNum}"></a>
+                            <span style="font-weight: bold;background: #6faed9;" th:if="${nav == allExpert.pageNum}" th:text="${nav}" ></span>
+                        </li>
+
+                        <li th:if="${allExpert.hasNextPage}">
+                            <a th:href="'/editorReview?expageNum='+${allExpert.nextPage}">
+                                <i class="layui-icon layui-icon-next" style="font-size: 10px"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="'/editorReview?expageNum='+${allExpert.pages}">尾页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<div style="text-align: center">
+    <button type="button" class="layui-btn layui-btn-danger" id="tg_btn">退稿</button>
+    <button type="button" class="layui-btn layui-btn-warm" id="tx_btn">退修</button>
+    <button type="button" class="layui-btn layui-btn-normal" id="ac_btn">通过</button>
+</div>
+<br><br>
+<script src="../layui/layui.js"></script>
+<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    layui.use(['layer'], function() {
+        var layer = layui.layer;
+
+        $(function (){
+            var articleID = $(".Aid").val();
+            var CS_content;
+            var expertID;
+            $("tbody tr").click(function () {
+                $(this).prop("style", "background-color:#ececec").siblings().prop("style", "background-color:#ffffff");
+                $("tbody input:radio").removeAttr("checked");
+                $(this).find("input:radio").attr("checked", true);
+                expertID = $(this).find("input:radio").val();
+            });
+
+            $("#ac_btn").click(function (){
+                CS_content = $(".ed_content").val();
+                $.ajax({
+                    url: "/editorAccept",
+                    type: "post",
+                    data: {
+                        "articleID": articleID,
+                        "CS_content": CS_content,
+                        "expertID": expertID
+                    },
+                    success: function (data) {
+                        if(data==="success"){
+                            layer.alert('审核成功', {icon:1}, function (){
+                                window.location.href="/editorOnline";
+                            });
+                        }else{
+                            layer.alert('审核失败', {icon:2}, function (){
+                                window.location.href="/editorOnline";
+                            });
+                        }
+                    }
+                });
+            });
+
+            $("#tg_btn").click(function (){
+                CS_content = $(".ed_content").val();
+                $.ajax({
+                    url: "/editorRejection",
+                    type: "post",
+                    data: {
+                        "articleID": articleID,
+                        "CS_content": CS_content,
+                    },
+                    success: function (data) {
+                        if(data==="success"){
+                            layer.alert('退稿成功', {icon:1}, function (){
+                                window.location.href="/editorOnline";
+                            });
+                        }else{
+                            layer.alert('退稿失败', {icon:2}, function (){
+                                window.location.href="/editorOnline";
+                            });
+                        }
+                    }
+                });
+            });
+
+            $("#tx_btn").click(function (){
+                CS_content = $(".ed_content").val();
+                $.ajax({
+                    url: "/editorRevision",
+                    type: "post",
+                    data: {
+                        "articleID": articleID,
+                        "CS_content": CS_content,
+                    },
+                    success: function (data) {
+                        if(data==="success"){
+                            layer.alert('退修成功', {icon:1}, function (){
+                                window.location.href="/editorOnline";
+                            });
+                        }else{
+                            layer.alert('退修失败', {icon:2}, function (){
+                                window.location.href="/editorOnline";
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>

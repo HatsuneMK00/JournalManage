@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SMART PAPER</title>
+    <link rel="stylesheet" href="../css/login.css" type="text/css" />
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<section id="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <a href="javascript:;" class="current">用户登录</a>
+        <a href="javascript:;">用户注册</a>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <form action=/UserLogin method="post" class="layui-form">
+                <div class="s1">
+                    <h4>用户名</h4>
+                    <input type="text" name="username" placeholder="请输入用户名" class="un">
+                </div>
+                <div class="s1">
+                    <h4>密码</h4>
+                    <input type="password" name="password" placeholder="请输入密码" class="pwd">
+                </div>
+                <div class="s1">
+                    <h4>选择用户身份</h4>
+                    <select name="role" lay-ignore lay-verify="required" id="loginrole">
+                        <option value=""></option>
+                        <option value="0">作者</option>
+                        <option value="1">编辑</option>
+                        <option value="2">专家</option>
+                        <option value="3">主编</option>
+                        <option value="4">管理员</option>
+                    </select>
+                </div>
+                <div class="s3">
+                    <input type="button" value="登&nbsp;录" class="loginbtn">
+                </div>
+            </form>
+            <br><br>
+            <div class="s5">
+                <span>------使用第三方账号直接登录------</span>
+            </div>
+            <div class="s6">
+                <a href="#">
+                    <img src="../images/qq.png" alt="">
+                </a>
+                <a href="#">
+                    <img src="../images/wechat.png" alt="">
+                </a>
+            </div>
+            <br>
+        </div>
+        <div class="dom">
+            <form action=/UserRegister method="post" class="layui-form">
+                <div class="s1">
+                    <h4>用户名</h4>
+                    <input type="text" name="username" placeholder="请输入注册的用户名(中、英文均可)" class="run">
+                </div>
+                <div class="s1">
+                    <h4>邮箱</h4>
+                    <input type="email" name="email" placeholder="请输入注册的邮箱" class="yx">
+                </div>
+                <div class="s1">
+                    <h4>密码</h4>
+                    <input type="password" name="password" placeholder="请输入密码(英文、数字)" class="rpwd">
+                </div>
+                <div class="s1">
+                    <h4>确定密码</h4>
+                    <input type="password" name="password1" placeholder="再次输入你的密码" class="rpwd1">
+                </div>
+                <div class="s1">
+                    <h4>选择注册的用户身份</h4>
+                    <select name="role" lay-ignore lay-verify="required" id="registerrole">
+                        <option value=""></option>
+                        <option value="0">作者</option>
+                        <option value="1">编辑</option>
+                        <option value="2">专家</option>
+                        <option value="3">主编</option>
+                    </select>
+                </div>
+                <div class="s3" style="margin-bottom: 3rem">
+                    <input type="button" value="注&nbsp;册" class="registerbtn">
+                </div>
+                <div class="s5">
+                    <span>------使用第三方账号直接登录------</span>
+                </div>
+                <div class="s6">
+                    <a href="#">
+                        <img src="../images/qq.png" alt="">
+                    </a>
+                    <a href="#">
+                        <img src="../images/wechat.png" alt="">
+                    </a>
+                </div>
+                <br>
+            </form>
+        </div>
+
+    </div>
+</section>
+<script src="../layui/layui.js"></script>
+<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+<script src="../js/login.js"></script>
+<script>
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+
+        $(function () {
+            $(".loginbtn").click(function () {
+                var username = $(".un").val();
+                var password = $(".pwd").val();
+                var role = $("#loginrole option:selected").val();
+                $.ajax({
+                    url: "/UserLogin",
+                    data: {
+                        "username": username,
+                        "password": password,
+                        "role": role
+                    },
+                    type: "post",
+                    success: function (data) {
+                        if(data==="author"){
+                            layer.alert("作者登录成功!", {icon:1}, function (){
+                                window.location.href="/authorIndex";
+                            });
+                        }else if(data==="editor"){
+                            layer.alert("编辑登录成功!", {icon:1}, function (){
+                                window.location.href="/editorIndex";
+                            });
+                        }else if(data==="expert"){
+                            layer.alert("专家登录成功!", {icon:1}, function (){
+                                window.location.href="/expertIndex";
+                            });
+                        }else if(data==="chief"){
+                            layer.alert("主编登录成功!", {icon:1}, function (){
+                                window.location.href="/chiefIndex";
+                            });
+                        }else if(data==="admin"){
+                            layer.alert("管理员登录成功!", {icon:1}, function (){
+                                window.location.href="/adminIndex";
+                            });
+                        }else {
+                            layer.alert("登录失败!", {icon:2}, function (){
+                                window.location.href="/login";
+                            });
+                        }
+                    }
+                });
+            });
+
+            $(".registerbtn").click(function () {
+                var username = $(".run").val();
+                var email = $(".yx").val();
+                var password = $(".rpwd").val();
+                var password1 = $(".rpwd1").val();
+                var role = $("#registerrole option:selected").val();
+                $.ajax({
+                    url:"/UserRegister",
+                    data: {
+                        "username": username,
+                        "email": email,
+                        "password": password,
+                        "password1": password1,
+                        "role": role
+                    },
+                    type: "post",
+                    success: function (data) {
+                        if(data==="success"){
+                            layer.alert("用户注册成功!", {icon:1}, function (){
+                                window.location.href="/login";
+                            });
+                        }else if(data==="pwd_not_equal"){
+                            layer.alert("两次输入密码不一致!请重新注册!", {icon:2}, function (){
+                                window.location.href="/login";
+                            });
+                        }else if(data==="role_null"){
+                            layer.alert("请选择注册用户类型!", {icon:2}, function (){
+                                window.location.href="/login";
+                            });
+                        }else if(data==="failed"){
+                            layer.alert("用户注册失败!", {icon:2}, function (){
+                                window.location.href="/login";
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>
