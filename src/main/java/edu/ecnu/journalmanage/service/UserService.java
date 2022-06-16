@@ -52,4 +52,8 @@ public class UserService {
         return userMapper.updateUser(user) == 1 ? null : "Update user failed";
     }
 
+    public User getUserById(int userId) {
+        return userMapper.getUserById(userId);
+    }
+
 }
