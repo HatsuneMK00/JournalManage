@@ -24,10 +24,10 @@ public class FileController {
         String[] filePath_split = relative_filePath.split("/");
 
         // 文件存储路径
-        String path = "D:/MyGithub/JournalManage/src/main/resources/static/files/";
+        // String path = "D:/MyGithub/JournalManage/src/main/resources/static/files/";
+        String path = "/root/SmartPaper/src/main/resources/static/files/";
         // 从请求中获取文件名
         String fileName = filePath_split[filePath_split.length-1];
-        System.out.println(fileName);
         // 创建输出流对象
         ServletOutputStream outputStream = response.getOutputStream();
         //以字节数组的形式读取文件

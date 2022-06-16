@@ -68,9 +68,9 @@ public class UserController {
             user.setRole(Role.chiefEditor);
         }
         String register = userService.register(user);
-        if(register.equals("Register failed")){
-            return "failed";
+        if(register == null) {
+            return "success";
         }
-        return "success";
+        return "failed";
     }
 }

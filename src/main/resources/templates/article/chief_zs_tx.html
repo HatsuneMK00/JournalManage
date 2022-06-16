@@ -55,9 +55,12 @@
     <div class="content-body">
         <div class="dom" style="display: block;">
             <div class="s1">
-                <h4>当前状态:  <span style="font-size: large; color: crimson">外审</span></h4>
+                <h4>当前状态:  <span style="font-size: large; color: crimson">终审退修</span></h4>
             </div>
-            <br>
+            <div class="s1" style="text-align: center">
+                <h4>等待投稿人上传提交修改稿</h4>
+            </div>
+            <br><br>
         </div>
     </div>
 </section>
@@ -95,6 +98,96 @@
                     <td th:text="${review.createTime}"></td>
                 </tr>
                 <tr th:each="review:${CSCS_reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.reviewerId}"></td>
+                    <td th:text="${review.content}"></td>
+                    <td th:text="${review.type}"></td>
+                    <td th:text="${review.createTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <br><br>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">外审意见</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="100">
+                    <col width="100">
+                    <col width="250">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>外审专家ID</th>
+                    <th>外审意见</th>
+                    <th>意见类型</th>
+                    <th>评价时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review:${WS_reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.reviewerId}"></td>
+                    <td th:text="${review.content}"></td>
+                    <td th:text="${review.type}"></td>
+                    <td th:text="${review.createTime}"></td>
+                </tr>
+                <tr th:each="review:${WSCS_reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.reviewerId}"></td>
+                    <td th:text="${review.content}"></td>
+                    <td th:text="${review.type}"></td>
+                    <td th:text="${review.createTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <br><br>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="content-header clearfix">
+        <!-- 当前默认显示登陆界面-->
+        <b style="font-size: large">终审意见</b>
+    </div>
+
+    <div class="content-body">
+        <div class="dom" style="display: block;">
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="100">
+                    <col width="100">
+                    <col width="250">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>主编ID</th>
+                    <th>终审意见</th>
+                    <th>意见类型</th>
+                    <th>评价时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review:${ZS_reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.reviewerId}"></td>
+                    <td th:text="${review.content}"></td>
+                    <td th:text="${review.type}"></td>
+                    <td th:text="${review.createTime}"></td>
+                </tr>
+                <tr th:each="review:${ZSCS_reviews}">
                     <td th:text="${review.id}"></td>
                     <td th:text="${review.reviewerId}"></td>
                     <td th:text="${review.content}"></td>

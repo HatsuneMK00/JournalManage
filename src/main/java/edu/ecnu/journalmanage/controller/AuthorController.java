@@ -49,10 +49,10 @@ public class AuthorController {
         //获取上传文件的文件名
         String fileName = session.getAttribute("uid") + file.getOriginalFilename();
         //获取文件绝对存储路径 System.getProperty("user.dir")是获取当前项目的地址
-        String savePath = System.getProperty("user.dir")+"/src/main/resources/static/files/" + fileName;
+        // String savePath = System.getProperty("user.dir")+"/src/main/resources/static/files/" + fileName;
+        String savePath = "/root/SmartPaper/src/main/resources/static/files/" + fileName;
         //相对路径
         String relativeSavePath = "/src/main/resources/static/files/" + fileName;
-        System.out.println(relativeSavePath);
         try{
             //实现文件存储(绝对路径)
             FileUtil.writeBytes(file.getBytes(), savePath);
@@ -77,7 +77,8 @@ public class AuthorController {
         //获取上传文件的文件名
         String fileName = session.getAttribute("uid") + file.getOriginalFilename();
         //获取文件绝对存储路径 System.getProperty("user.dir")是获取当前项目的地址
-        String savePath = System.getProperty("user.dir")+"/src/main/resources/static/files/" + fileName;
+        // String savePath = System.getProperty("user.dir")+"/src/main/resources/static/files/" + fileName;
+        String savePath = "/root/SmartPaper/src/main/resources/static/files/" + fileName;
         //相对路径
         String relativeSavePath = "/src/main/resources/static/files/" + fileName;
         System.out.println(relativeSavePath);
@@ -134,7 +135,7 @@ public class AuthorController {
     }
 
     @RequestMapping("/articleDetail")
-    public String ArticleDetail(int articleID, Model model){
+    public String ArticleDetail(int articleID, Model model, HttpSession session){
         //根据articleID获取到详细信息，存入model域中，返回前端页面进行展示
         //根据Map中的ReviewType，将对应的评审意见存入对应的变量中
         Article article = articleService.getArticleById(articleID);
@@ -154,12 +155,20 @@ public class AuthorController {
         model.addAttribute("ZS_reviews", ZS_reviews);
         model.addAttribute("ZSCS_reviews", ZSCS_reviews);
 
+        int UID = (Integer) session.getAttribute("uid");
+        User user = userService.getUserById(UID);
+        Role role = user.getRole();
+
         if(article.getStatus() == ArticleStatus.editorReview){
             return "article/cs";
         }else if(article.getStatus() == ArticleStatus.editorRejection){
             return "article/cs_tg";
         }else if(article.getStatus() == ArticleStatus.editorReturned){
-            return "article/cs_tx";
+            if(role == Role.author){
+                return "article/cs_tx";
+            }else{
+                return "article/editor_cs_tx";
+            }
         }else if(article.getStatus() == ArticleStatus.editorRevision){
             return "article/cs_cs";
         }else if(article.getStatus() == ArticleStatus.expertReview){
@@ -167,7 +176,11 @@ public class AuthorController {
         }else if(article.getStatus() == ArticleStatus.expertRejection){
             return "article/ws_tg";
         }else if(article.getStatus() == ArticleStatus.expertReturned){
-            return "article/ws_tx";
+            if(role == Role.author){
+                return "article/ws_tx";
+            }else{
+                return "article/expert_ws_tx";
+            }
         }else if(article.getStatus() == ArticleStatus.expertRevision){
             return "article/ws_cs";
         }else if(article.getStatus() == ArticleStatus.chiefEditorReview){
@@ -175,7 +188,11 @@ public class AuthorController {
         }else if(article.getStatus() == ArticleStatus.chiefEditorRejection){
             return "article/zs_tg";
         }else if(article.getStatus() == ArticleStatus.chiefEditorReturned){
-            return "article/zs_tx";
+            if(role == Role.author){
+                return "article/zs_tx";
+            }else{
+                return "article/chief_zs_tx";
+            }
         }else if(article.getStatus() == ArticleStatus.chiefEditorRevision){
             return "article/zs_cs";
         }
